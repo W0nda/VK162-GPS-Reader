@@ -1,0 +1,4 @@
+Prblm de chars non-ASCII à la fin du buffer si trop petit
+soucis d'affichage/lecture si utilisation fopen,fread,fclose
+	-> a comprendre
+Gestion des erreurs (fermeture stream et dbConn)
