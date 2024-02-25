@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <string.h>
 
+//PostgreSQL lib
+#include <libpq-fe.h>
+
 // Prblm de chars non-ASCII à la fin du buffer si trop petit
 // soucis d'affichage/lecture si utilisation fopen,fread,fclose
 
@@ -17,7 +20,9 @@ int main(){
 			substr = strtok (buffer,",");
   			for(int i=0;i<6;i++)
   			{
-    				printf ("%s\n",substr);
+				if(i!=0){
+    					printf ("%s\n",substr);
+				}
     				substr = strtok (NULL, ",");
   			}
 		}
