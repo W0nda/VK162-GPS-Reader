@@ -1,1 +1,2 @@
 gpsOut.txt = output example of G-MOUSE GPS
+Compilation: gcc -lpq readgps.c -o readgps
