@@ -12,11 +12,29 @@ void flush(char* array, int size){
 	}
 }
 
-void selstr(char* array, int start, int n){
-	for (int i=0; i<n; i++) {
-		array[i] = array[start+i];
+void selstr(char* array){
+	for (int i=0; i<11; i++){
+		array[i]=array[7+i];
 	}
-	array[n]='\0';
+
+	array[11]='\''; // 'N'
+	array[12]=array[18];
+	array[13]='\'';
+	//OK
+
+	for(int i=14; i<27; i++){
+		array[i]=array[5+i];
+	}
+
+	array[27]='\''; // 'W'
+	array[28]=array[32];
+	array[29]='\'';
+
+	for(int i=30; i<40; i++){
+		array[i]=array[3+i];
+	}
+
+	array[40]='\0';
 }
 
 int main(){
@@ -35,19 +53,25 @@ int main(){
 
 	while(1) {
 		strcpy(request,"INSERT INTO coordinates(lat,latcard,lon,loncard,time) VALUES (");
-		//table a changer dans DB: FLOAT4 -> FLOAT5
 		read(fd,&buffer,100);
 		if(strstr(buffer, "$GPGLL,")){
+			//preparing buffer
 			printf("%s\n",buffer);
-			selstr(buffer, 7, 36);
+			selstr(buffer);
 			printf("%s\n",buffer);
+
+			//preparing request
 			strcat(request, buffer);
 			strcat(request,");\n");
 			printf("Requests: %s\n",request);
+
 			res = PQexec(dbConn, request); //don't work(prbm de guillemet pour str)
 			if (PQresultStatus(res) == PGRES_COMMAND_OK){
 				printf("Ooooh yeah!!");
+			}else{
+				printf("%s\n",PQerrorMessage(dbConn));
 			}
+
 			PQclear(res);
 			flush(request,sizeof(request));
 		}
