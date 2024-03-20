@@ -3,7 +3,6 @@
 
 void frame2datas(char* frame, char datas[][20]){
 	int j=0; //put 7
-	printf("%s\n",frame);
 	for (int i=0; i<6; i++){
 		while (frame[j] != ',') {
 			datas[i][j] = frame[j];
@@ -11,7 +10,6 @@ void frame2datas(char* frame, char datas[][20]){
 		}
 		datas[i][j+1]='\n';
 		j++;
-		printf("frame2datas %s\n",datas[i]);
 	}
 }
 
@@ -24,13 +22,11 @@ int main(){
 	for(int i=0; i<100; i++){
 		fgets(frame, sizeof(frame), gps);
 		if (strstr(frame,"$GPGLL")) {
-			printf("%s",frame);
+			printf("%s\n",frame);
 			frame2datas(frame,datas);
 			for (int j=0; j<6; j++) {
-				printf("%d\n",j);
-				printf("%s",datas[j]);
+				printf("%s\n",datas[j]);
 			}
-			printf("%c",'\n');
 		}
 	}
 
