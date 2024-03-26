@@ -2,34 +2,36 @@
 #include <string.h>
 
 void frame2datas(char* frame, char datas[][20]){
-	int j=0; //put 7
-	for (int i=0; i<6; i++){
-		while (frame[j] != ',') {
-			datas[i][j] = frame[j];
-			j++;
-		}
-		datas[i][j+1]='\n';
-		j++;
-	}
+        int save=7;
+        int j=0;
+        for (int i=0; i<5; i++){
+                while (frame[save+j] != ',') {
+                        datas[i][j] = frame[save+j];
+                        j++;
+                }
+                datas[i][j]='\0';
+                j++;
+                save=save+j;
+                j=0;
+        }
 }
 
 int main(){
 
-	FILE* gps = fopen("/dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_7_-_GPS_GNSS_Receiver-if00", "r");
-	char frame[100];
-	char datas[6][20];
+        FILE* gps = fopen("/dev/serial/by-id/usb-u-blox_AG_-_www.u-blox.com_u-blox_7_-_GPS_GNSS_Receiver-if00", "r");
+        char frame[100];
+        char datas[5][20];
 
-	for(int i=0; i<100; i++){
-		fgets(frame, sizeof(frame), gps);
-		if (strstr(frame,"$GPGLL")) {
-			printf("%s\n",frame);
-			frame2datas(frame,datas);
-			for (int j=0; j<6; j++) {
-				printf("%s\n",datas[j]);
-			}
-		}
-	}
+        for(int i=0; i<100; i++){
+                fgets(frame, sizeof(frame), gps);
+                if (strstr(frame,"$GPGLL")) {
+                        frame2datas(frame,datas);
+                        for (int j=0; j<5; j++) {
+                                printf("%s\n",datas[j]);
+                        }
+                }
+        }
 
-	fclose(gps);
-	return 0;
+        fclose(gps);
+        return 0;
 }
