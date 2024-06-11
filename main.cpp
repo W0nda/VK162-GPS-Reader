@@ -23,7 +23,7 @@ int main(){
 	tm* realdate = localtime(&cdate);
 
 	//CONNEXION A LA BDD
-	if( mysql_real_connect(conn,"192.168.12.22","remote_user","bonjour","bdd",3306,NULL,0) == NULL ){
+	if( mysql_real_connect(conn,"IP_ADDRESS","USER","PASSWORD","DB_NAME",3306,NULL,0) == NULL ){
 			printf("Connexion error: %s\n",mysql_error(conn));
 			mysql_close(conn);
 			return 1;
